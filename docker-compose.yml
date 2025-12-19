@@ -1,0 +1,41 @@
+# Docker Compose for Multi-Container Setup
+# This allows running both Patient App and ML Monitor together
+
+version: '3.8'
+
+services:
+  # Patient Application
+  patient-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: patient-app
+    ports:
+      - "5000:5000"
+    networks:
+      - aiops-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  # ML Monitor (Optional - runs as separate container)
+  ml-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    container_name: ml-monitor
+    environment:
+      - PATIENT_URL=http://patient-app:5000
+    depends_on:
+      - patient-app
+    networks:
+      - aiops-network
+    restart: unless-stopped
+
+networks:
+  aiops-network:
+    driver: bridge

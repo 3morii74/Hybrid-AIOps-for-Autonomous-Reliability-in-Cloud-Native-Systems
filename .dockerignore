@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+QUICK_START.md
+*.md
+
+# Kubernetes files
+kubernetes-*.yaml
+
+# Old project structure
+self-healing-project/
+
+# Note: Monitor files (doctor_monitor_ml.py, train_brain.py, requirements-monitor.txt) 
+# are NOT excluded here because they're needed for Dockerfile.monitor builds
+
+# Logs
+*.log
